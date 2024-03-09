@@ -61,7 +61,7 @@ def hebrew_letter_to_value(letter):
     'ē': 5,
     }
 
-    # Entferne Diakritika vom Buchstaben
+    # Stelle sicher, dass Diakritika entfernt werden, bevor auf das Wörterbuch zugegriffen wird
     letter_no_diacritics = strip_diacritics(letter)
 
     if letter_no_diacritics in values:
@@ -69,7 +69,11 @@ def hebrew_letter_to_value(letter):
     elif letter.strip() == "":  # Ignoriere Leerzeichen und leere Zeilen
         return 0
     else:
-        raise ValueError(f"Unbekanntes Zeichen '{letter}' gefunden.")
+        # Anstatt einen Fehler zu werfen, gib 0 zurück für Zeichen, die nicht im Wörterbuch gefunden werden
+        # Dies verhindert das Programmabbruch bei unbekannten Zeichen
+        # Optional: Protokolliere unbekannte Zeichen für die Überprüfung
+        print(f"Warnung: Unbekanntes Zeichen '{letter}' ignoriert.")
+        return 0
 
 
 def calculate_gematria(text):
